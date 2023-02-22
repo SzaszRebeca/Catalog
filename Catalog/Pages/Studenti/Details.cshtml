@@ -1,0 +1,37 @@
+﻿@page
+@model Catalog.Pages.Studenti.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Student</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Student.NumeStudent)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Student.NumeStudent)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Student.Facultate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Student.Facultate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Student.An)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Student.An)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Student?.ID">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>
