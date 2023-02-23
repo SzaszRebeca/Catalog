@@ -23,5 +23,9 @@ namespace Catalog.Data
         public DbSet<Catalog.Models.Profesor> Profesor { get; set; }
 
         public DbSet<Catalog.Models.Student> Student { get; set; }
+
+        public DbSet<Catalog.Models.Member> Member { get; set; }
+
+        public DbSet<Catalog.Models.Notare> Notare { get; set; }
     }
 }

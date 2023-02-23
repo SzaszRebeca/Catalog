@@ -4,6 +4,7 @@ using Catalog.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Catalog.Migrations
 {
     [DbContext(typeof(CatalogContext))]
-    partial class CatalogContextModelSnapshot : ModelSnapshot
+    [Migration("20230222133735_logare")]
+    partial class logare
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,35 +64,6 @@ namespace Catalog.Migrations
                     b.ToTable("Materie");
                 });
 
-            modelBuilder.Entity("Catalog.Models.Member", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
-
-                    b.Property<string>("Adress")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Phone")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Member");
-                });
-
             modelBuilder.Entity("Catalog.Models.Nota", b =>
                 {
                     b.Property<int>("ID")
@@ -115,32 +88,6 @@ namespace Catalog.Migrations
                     b.HasIndex("StudentID");
 
                     b.ToTable("Nota");
-                });
-
-            modelBuilder.Entity("Catalog.Models.Notare", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
-
-                    b.Property<int?>("MemberID")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("ReturnDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("StudentID")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("MemberID");
-
-                    b.HasIndex("StudentID");
-
-                    b.ToTable("Notare");
                 });
 
             modelBuilder.Entity("Catalog.Models.Profesor", b =>
@@ -223,21 +170,6 @@ namespace Catalog.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("Catalog.Models.Notare", b =>
-                {
-                    b.HasOne("Catalog.Models.Member", "Member")
-                        .WithMany("Notare")
-                        .HasForeignKey("MemberID");
-
-                    b.HasOne("Catalog.Models.Student", "Student")
-                        .WithMany()
-                        .HasForeignKey("StudentID");
-
-                    b.Navigation("Member");
-
-                    b.Navigation("Student");
-                });
-
             modelBuilder.Entity("Catalog.Models.Student", b =>
                 {
                     b.HasOne("Catalog.Models.Materie", null)
@@ -248,11 +180,6 @@ namespace Catalog.Migrations
             modelBuilder.Entity("Catalog.Models.Materie", b =>
                 {
                     b.Navigation("Studenti");
-                });
-
-            modelBuilder.Entity("Catalog.Models.Member", b =>
-                {
-                    b.Navigation("Notare");
                 });
 #pragma warning restore 612, 618
         }
