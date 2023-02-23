@@ -1,12 +1,46 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Catalog.Data;
+using Microsoft.AspNetCore.Identity;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorPages();
+//builder.Services.AddRazorPages();
+//builder.Services.AddDbContext<CatalogContext>(options =>
+//  options.UseSqlServer(builder.Configuration.GetConnectionString("CatalogContext") ?? throw new InvalidOperationException("Connection string 'CatalogContext' not found.")));
+
+//builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+//  .AddEntityFrameworkStores<LibraryIdentityContext>();
+
+//builder.Services.AddDbContext<LibraryIdentityContext>(options =>
+//options.UseSqlServer(builder.Configuration.GetConnectionString("CatalogContext") ?? throw new InvalidOperationException("Connection string 'CatalogContex' not found.")));
+//builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+//options.SignIn.RequireConfirmedAccount = true)
+//.AddRoles<IdentityRole>()
+//.AddEntityFrameworkStores<LibraryIdentityContext>();
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminPolicy", policy =>
+    policy.RequireRole("Admin"));
+});
+
+// Add services to the container.
+builder.Services.AddRazorPages(options =>
+{
+    options.Conventions.AuthorizeFolder("/Note");
+    options.Conventions.AllowAnonymousToPage("/Note/Index");
+    options.Conventions.AllowAnonymousToPage("/Note/Details");
+});
 builder.Services.AddDbContext<CatalogContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("CatalogContext") ?? throw new InvalidOperationException("Connection string 'CatalogContext' not found.")));
+
+builder.Services.AddDbContext<LibraryIdentityContext>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("CatalogContext") ?? throw new InvalidOperationException("Connection string 'CatalogContex' not found.")));
+builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+options.SignIn.RequireConfirmedAccount = true)
+ .AddRoles<IdentityRole>()
+ .AddEntityFrameworkStores<LibraryIdentityContext>();
 
 var app = builder.Build();
 
@@ -22,6 +56,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseAuthentication();;
 
 app.UseAuthorization();
 
