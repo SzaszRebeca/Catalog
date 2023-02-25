@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Catalog.Data;
 using Catalog.Models;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace Catalog.Pages.Members
 {
+    [Authorize(Roles = "Admin")]
     public class IndexModel : PageModel
     {
         private readonly Catalog.Data.CatalogContext _context;

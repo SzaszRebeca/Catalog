@@ -135,7 +135,7 @@ _context;
             {
                 _logger.LogInformation("User created a new account with password.");
 
-                var role = await _userManager.AddToRoleAsync(user, "User");
+              //  var role = await _userManager.AddToRoleAsync(user, "User");
                 var userId = await _userManager.GetUserIdAsync(user);
                 var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
@@ -149,7 +149,7 @@ _context;
                     code = code,
                     returnUrl = returnUrl
                 },
-                protocol: Request.Scheme);
+                protocol: Request.Scheme) ;
                 await _emailSender.SendEmailAsync(Input.Email, "Confirm your email", $"Please confirm your account by <ahref = '{HtmlEncoder.Default.Encode(callbackUrl)}' > clicking here </ a >.");
 
 
